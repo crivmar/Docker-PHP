@@ -1,0 +1,28 @@
+version: '3.1'
+services:
+  bookmedik:
+    container_name: bookmedik
+    image: crivmar/bookmedik:v1
+    restart: always
+    environment:
+      USUARIO: bookmedik
+      PASS: 12345
+      HOST: db
+      BD: bookmedik
+    ports:
+      - 8080:80
+    depends_on:
+      - db
+  db:
+    container_name: mariadb_db
+    image: mariadb
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: bookmedik
+      MARIADB_USER: bookmedik
+      MARIADB_PASSWORD: 12345
+    volumes:
+      - mariadb_data:/var/lib/mysql
+volumes:
+    mariadb_data:
