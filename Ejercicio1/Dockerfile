@@ -2,7 +2,7 @@ FROM debian:bullseye
 
 MAINTAINER crivmar
 
-RUN apt update && apt upgrade -y && apt install -y apache2 libapache2-mod-php php php-mysql mariadb-client
+RUN apt update && apt upgrade -y && apt install -y apache2 libapache2-mod-php php php-mysql mariadb-client && apt clean && rm -rf /var/lib/apt/lists/*
 
 ADD bookmedik /var/www/html/
 
