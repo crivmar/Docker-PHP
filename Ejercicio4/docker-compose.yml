@@ -1,0 +1,48 @@
+version: '3.1'
+services:
+  bookmedik:
+    container_name: bookmedik
+    image: crivmar/bookmedik:v3
+    restart: always
+    environment:
+      USUARIO: bookmedik
+      PASS: 12345
+      HOST: db
+      BD: bookmedik
+    ports:
+      - 8585:80
+    depends_on:
+      - db
+      - php
+    volumes:
+      - app_docs:/usr/share/nginx/html/
+
+  php:
+    container_name: php
+    image: crivmar/pfm:v1
+    restart: always
+    environment:
+      USUARIO: bookmedik
+      PASS: 12345
+      HOST: db
+      BD: bookmedik
+    depends_on:
+      - db
+    volumes:
+      - app_docs:/usr/share/nginx/html/
+
+  db:
+    container_name: db
+    image: mariadb
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: bookmedik
+      MARIADB_USER: bookmedik
+      MARIADB_PASSWORD: 12345
+    volumes:
+      - datos:/var/lib/mysql
+
+volumes:
+  app_docs:
+  datos:
